@@ -8,35 +8,25 @@
 if [ "$1" == "css" ];then
 	TAR="css"
 	SRC="less"
+	SEDRULE="\://less-css: s;require;//require;"
 elif [ "$1" == "less" ]; then
 	TAR="less"
 	SRC="css"
+	SEDRULE="\://less-css: s;.*// *r; r;"
 else
 	echo argument is err!
 	exit 0
 fi
 
-if [ "$2" != "" ]; then
-	MYPATH="$2"
-else
-	MYPATH="./"
-fi
+ grep -l -R views/* public/javascripts/* \
+ 		-e '<!-- less-css -->'  \
+ 		-e '//less-css'  \
+ 		| sed 's;\([[:print:]]\{1,\}\);cp \1 \1.old;' | bash -x
 
- grep -l '<!-- less-css -->' -R "$MYPATH"/* | sed 's;\([[:print:]]\{1,\}\);cp \1 \1.old;' | bash -x
-
-function makeold()
-{
-	for file in "$1"/*
+find . -name "*.old" -type f |
+	while read file
 	do
-		if [ "${file##*.}" == "old" ]; then
-			sed 's;\([[:print:]]\{1,\}\)/'$SRC'"\([[:print:]]\{1,\}\)/'$SRC'/\([[:print:]]\{1,\}\).'$SRC'"\([[:print:]]\{1,\}\)<!-- less-css -->;\1/'$TAR'"\2/'$TAR'/\3.'$TAR'"\4<!-- less-css -->;g'  < "$file" > "${file%.*}"
-		fi
-		if [ -d "$file" ]; then
-			makeold "$file"
-		fi
+		sed -e '\:<!-- less-css -->: s;\([^- ]\)'$SRC';\1'$TAR';g' \
+			-e "$SEDRULE"  < "$file" > "${file%.*}"
+		rm "$file"
 	done
-}
-
-makeold "$MYPATH"
-
- find "$MYPATH" -name "*.old" -exec rm {} \;
