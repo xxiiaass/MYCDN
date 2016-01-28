@@ -13,7 +13,7 @@ function tranfiles()
 	if [ -d "$1" ]; then
 		for file in "$1"/*
 		do
-			if [ -f "$file" ]; then
+function			if [ -f "$file" ]; then
 				if [ "$EXEC" == "push" ]; then
 					scp "$file" x2:~/"$file"
 				fi
@@ -22,7 +22,7 @@ function tranfiles()
 				fi
 			else
 				tranfiles "$file"
-			fi
+			}			fi
 		done
 	fi
 }

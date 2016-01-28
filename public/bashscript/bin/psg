@@ -1,0 +1,7 @@
+#!/bin/bash
+
+KEY=$1
+STR=`ps -ef | grep "$KEY" | grep -v -E "grep|psg"`
+
+STRD=`echo $STR | sed 's/'$KEY'/\\\\e[1;31m&\\\\e[0m/g'`
+echo -e "$STRD"
