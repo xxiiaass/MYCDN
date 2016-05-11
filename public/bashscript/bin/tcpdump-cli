@@ -1,0 +1,15 @@
+#!/bin/bash
+# i=0
+# while true
+# do
+# 		ETH=`ifconfig | grep -E -e '(\d{3}\.){2}\d\.\d{1,3}' -B ${i} | egrep -e '^\S+:' -o | egrep '^\w+' -o`
+# 		if [ -n "${ETH}" ]
+# 		then
+# 				break;
+# 		fi
+# 		((i++))
+# done
+
+SHELL="sudo tcpdump -X -s 0 -i $1 tcp port $2 and \(tcp[32:2]=0x4745 or tcp[32:2]=0x4854\)"
+
+echo $SHELL | sh -x

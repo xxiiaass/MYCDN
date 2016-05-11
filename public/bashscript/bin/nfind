@@ -1,0 +1,10 @@
+#!/bin/bash
+
+RES=$( find . -name "*$1*" ! -path "*/.*")
+
+for i in $RES
+do
+	echo $i
+done
+
+
