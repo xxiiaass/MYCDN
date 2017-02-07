@@ -1,0 +1,5 @@
+#!/bin/bash
+
+branch=`git branch | egrep -e "\*[ ](.+)"| egrep -e "[^* ].+" -o`
+
+git push origin $branch

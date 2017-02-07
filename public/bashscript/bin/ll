@@ -1,3 +1,3 @@
 #!/bin/bash
 
-ls -lah -F --show-control-chars --color=auto
+ls -lah -F -G 

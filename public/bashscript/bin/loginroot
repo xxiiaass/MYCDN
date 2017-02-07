@@ -1,0 +1,23 @@
+#!/usr/local/bin/expect
+
+set SERVER [lindex $argv 0]
+set timeout 3
+spawn ssh root@$SERVER
+expect  {
+	"password" {
+		send "Qeeniao@sy903\n"
+		interact
+	}
+	"yes/no" {
+		send "yes\n"
+		expect "password" { 
+			send "Qeeniao@sy903\n"
+			expect "\[root\*\]" {
+				interact
+			}
+		}
+	}
+	"\[root\*\]" {
+		interact
+	}
+}

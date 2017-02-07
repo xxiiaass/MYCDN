@@ -1,0 +1,17 @@
+#!/bin/bash
+
+SECOND=`date +%s`
+beginIndex=1
+
+for file in imgs/*
+do
+    ((beginIndex++))
+    qshell account d_ZwT4XNzBpnxsSpn9erC9tWoPXyI_uK7kzWFET3 RUGMtaUGX4o7DO2_qa4B27Z1rSZdZmbKn0hdP4vS
+    qshell fput qeeniao-mobile sns/fake/headimg/"$SECOND"/"$beginIndex" ./"$file" true
+
+    echo http://dn-kdjz.qbox.me/sns/fake/headimg/"$SECOND"/"$beginIndex" >> imgsurl
+
+done
+
+
+

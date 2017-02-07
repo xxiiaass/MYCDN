@@ -1,0 +1,32 @@
+#!/bin/bash
+#
+set -x
+
+#获取当前时间戳
+SECOND=`date +%s`
+
+#获取dump来源，测试服务器或者正式服务器
+targetDb=$1
+shift
+
+#复制的数据库列表
+schemeName="$*"
+
+#备份本地数据
+mysqldump -u kevin -pdanjin --databases $schemeName > ~/mysqlData/local_"$schemeName"_"$SECOND"
+
+#删除本地数据
+while [ $# != 0 ]
+do
+    echo 'drop database '$1'' | mysql -u kevin -pdanjin 
+    shift
+done
+
+#执行服务器上的备份脚本
+ssh root@api.test '/root/mysqldump/dump.sh '$SECOND' '$targetDb' '$schemeName' '
+
+#拷贝数据到本地
+scp 'root@api.test:/root/mysqldump/'$targetDb'_'$schemeName'_'$SECOND'' ~/mysqlData/
+
+#加载到数据库
+mysql -u kevin -pdanjin < ~/mysqlData/"$targetDb"_"$schemeName"_"$SECOND"

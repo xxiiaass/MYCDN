@@ -1,0 +1,28 @@
+#!/bin/bash
+
+#获取当前时间戳
+SECOND=$1
+shift
+
+#获取dump来源，测试服务器或者正式服务器
+targetDb=$1
+shift
+ 
+#复制的数据库列表
+schemeName="$*"
+
+#进入工作目录
+cd /root/mysqldump/
+
+#备份本地数据
+
+if [ $targetDb = 'test' ]; then
+#从测试服务器拷贝数据
+    mysqldump -u kevin -pdanjin --databases $schemeName > ./test_"$schemeName"_"$SECOND"
+fi
+
+if [ $targetDb = 'online' ]; then
+#从正式服务器拷贝数据
+    mysqldump -u kevin -pdanjin --databases $schemeName > ./online_"$schemeName"_"$SECOND"
+fi
+

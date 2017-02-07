@@ -1,0 +1,20 @@
+#!/usr/local/bin/expect
+
+set timeout 2
+spawn ssh api.test
+
+expect  -re "assword"
+send "danjin123456danjin\r"
+
+expect -re "qeeniao-test"
+send "su root\r"
+
+expect -re "assword"
+send "aw4a3f3!a\$05\r"
+
+expect -re "qeeniao-test"
+send "toapi\r"
+
+
+
+interact

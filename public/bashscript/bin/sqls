@@ -1,0 +1,10 @@
+#!/usr/local/bin/node
+
+var sql = process.argv[2] ;
+
+var times = process.argv[3] || 8;
+
+for (var i = 0; i < times; i++) {
+    var newsql = sql.replace(/\{\}/, i);
+    console.log(newsql);
+}

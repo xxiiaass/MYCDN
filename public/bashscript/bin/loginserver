@@ -1,0 +1,14 @@
+#!/usr/local/bin/expect
+
+set timeout 1
+spawn ssh xiashunxin@test
+expect {
+	"password" {send "danjina0\r"}
+}
+send "sudo su admin\r"
+expect {
+	"password" {send "danjina0\r"}
+}
+send "zsh\r"
+send "cd /data1/dev-project\r"
+interact

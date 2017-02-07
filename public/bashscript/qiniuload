@@ -1,0 +1,21 @@
+#!/bin/bash
+
+set -e
+set -x
+
+DIR=$1
+QINIUPATH=$2
+
+SECOND=`date +%s`
+beginIndex=1
+
+qshell account "cf-R5J0_9xiVLXl2P5vSSlF0gUWdnMlY-_HNnSH_"  "DNa7YBOGANNWL4cZZDc5J9DewD7rZMr5TIdNl2Tb"
+for file in "$DIR"*
+do
+    qshell fput "qeeniao-mobile" "$QINIUPATH"/"${file##*/}" ./"$file" true
+    echo https://dn-kdjz.qbox.me/"$QINIUPATH"/"${file##*/}"
+
+done
+
+
+
